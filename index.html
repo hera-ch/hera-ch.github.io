@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>轻梦 · 个人说明书</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --ink: #111118;
+  --ink-2: #555560;
+  --ink-3: #aaaabc;
+  --bg: #f5f4f0;
+  --bg-2: #eeece8;
+  --white: #ffffff;
+  --purple: #7c5af0;
+  --orange: #f07c3a;
+  --green: #1aab74;
+  --border: #e0deda;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Inter', -apple-system, "PingFang SC", sans-serif;
+  background: var(--bg);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.6;
+}
+
+/* ── Notice ── */
+.notice {
+  background: var(--orange);
+  color: #fff;
+  padding: 9px 24px;
+  text-align: center;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.01em;
+}
+.notice a { color: #fff; }
+
+/* ── Layout ── */
+.page {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 28px 120px;
+}
+
+/* ── Hero ── */
+.hero {
+  padding: 72px 0 60px;
+  border-bottom: 1px solid var(--border);
+}
+
+.hero-meta {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--purple);
+  margin-bottom: 18px;
+}
+
+.hero-name {
+  font-size: clamp(3rem, 10vw, 5.5rem);
+  font-weight: 900;
+  line-height: 0.95;
+  letter-spacing: -0.04em;
+  margin-bottom: 4px;
+  color: var(--ink);
+}
+
+.hero-name-sub {
+  font-size: clamp(1rem, 3vw, 1.4rem);
+  font-weight: 300;
+  font-style: italic;
+  color: var(--ink-2);
+  letter-spacing: 0.02em;
+  margin-bottom: 32px;
+}
+
+.hero-body {
+  display: block;
+}
+
+.hero-desc {
+  font-size: 15.5px;
+  color: var(--ink-2);
+  line-height: 1.75;
+  max-width: 400px;
+  margin-bottom: 24px;
+}
+.hero-desc strong { color: var(--ink); font-weight: 600; }
+
+.tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 11.5px;
+  padding: 4px 12px;
+  border-radius: 100px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+  color: var(--ink-2);
+}
+
+
+/* ── Section ── */
+.section { padding: 52px 0 0; }
+
+.section-head {
+  display: flex;
+  align-items: baseline;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--ink-3);
+}
+.section-rule { flex: 1; height: 1px; background: var(--border); align-self: center; }
+
+/* ── Timeline ── */
+.tl-item {
+  display: grid;
+  grid-template-columns: 108px 1fr;
+  gap: 20px;
+  padding: 18px 0;
+  border-bottom: 1px solid var(--border);
+}
+.tl-item:last-child { border-bottom: none; }
+
+.tl-year {
+  font-size: 11.5px;
+  color: var(--ink-3);
+  padding-top: 1px;
+  font-variant-numeric: tabular-nums;
+}
+
+.tl-badge {
+  display: inline-flex;
+  align-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  letter-spacing: 0.04em;
+}
+.tl-badge.now { background: #d1fae5; color: #065f46; }
+.tl-badge.intl { background: #dbeafe; color: #1e40af; }
+.tl-badge.byte { background: #fce7f3; color: #9d174d; }
+
+.tl-info h3 { font-size: 15px; font-weight: 600; margin-bottom: 3px; }
+.tl-info p { font-size: 13px; color: var(--ink-2); line-height: 1.5; }
+
+/* ── Cards ── */
+.cards {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+@media (max-width: 480px) { .cards { grid-template-columns: 1fr; } }
+
+.card {
+  background: var(--white);
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  padding: 22px;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+  transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+  position: relative;
+  overflow: hidden;
+}
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 48px rgba(0,0,0,0.08);
+  border-color: #d0cdc8;
+}
+.card-emoji { font-size: 26px; margin-bottom: 14px; }
+.card-title { font-size: 14px; font-weight: 600; margin-bottom: 5px; }
+.card-desc { font-size: 12.5px; color: var(--ink-2); line-height: 1.5; margin-bottom: 14px; }
+.card-link {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--purple);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+.card-link .arr { display: inline-block; transition: transform 0.15s; }
+.card:hover .card-link .arr { transform: translateX(3px); }
+
+.qr-wrap {
+  display: inline-block;
+  margin-top: 10px;
+  cursor: zoom-in;
+}
+.qr-img {
+  width: 84px; height: 84px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.15s;
+}
+.qr-wrap:hover .qr-img { opacity: 0.75; }
+
+/* ── Lightbox ── */
+.lb-overlay {
+  display: none;
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.72);
+  z-index: 9999;
+  align-items: center;
+  justify-content: center;
+  cursor: zoom-out;
+}
+.lb-overlay.active { display: flex; }
+.lb-overlay img {
+  max-width: min(360px, 90vw);
+  max-height: 90vh;
+  border-radius: 18px;
+  box-shadow: 0 24px 80px rgba(0,0,0,0.5);
+}
+
+/* ── Articles ── */
+.articles { display: flex; flex-direction: column; }
+.article {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+  text-decoration: none;
+  color: inherit;
+  transition: opacity 0.15s;
+}
+.article:last-child { border-bottom: none; }
+.article:hover { opacity: 0.6; }
+
+.article-icon {
+  flex-shrink: 0;
+  width: 42px; height: 42px;
+  border-radius: 11px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px;
+  background: var(--bg-2);
+  border: 1px solid var(--border);
+}
+.article-info { flex: 1; }
+.article-info h3 { font-size: 14px; font-weight: 500; margin-bottom: 2px; }
+.article-info p { font-size: 12px; color: var(--ink-3); }
+.article-arrow { color: var(--ink-3); font-size: 18px; }
+
+.article.wip .article-info h3 { color: var(--ink-3); }
+.article.wip .article-arrow { opacity: 0; }
+.wip-tag {
+  display: inline-block;
+  font-size: 10px; font-weight: 600;
+  padding: 2px 7px; border-radius: 4px;
+  background: #fff7ed;
+  color: var(--orange);
+  border: 1px solid #fed7aa;
+  margin-left: 8px;
+  vertical-align: middle;
+}
+
+/* ── Footer ── */
+.footer {
+  margin-top: 72px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  text-align: center;
+  font-size: 12px;
+  color: var(--ink-3);
+}
+
+/* ── TOC ── */
+.toc {
+  position: fixed;
+  top: 50%;
+  right: max(24px, calc((100vw - 720px) / 2 - 120px));
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 100;
+}
+@media (max-width: 1000px) { .toc { display: none; } }
+
+.toc-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  text-decoration: none;
+  color: var(--ink-3);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  transition: color 0.15s;
+  white-space: nowrap;
+  cursor: pointer;
+}
+.toc-item:hover, .toc-item.active { color: var(--ink); }
+.toc-dot {
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  flex-shrink: 0;
+  transition: transform 0.15s;
+}
+.toc-item.active .toc-dot { transform: scale(1.6); }
+.toc-label { opacity: 0; transition: opacity 0.15s; }
+.toc-item:hover .toc-label, .toc-item.active .toc-label { opacity: 1; }
+</style>
+</head>
+<body>
+
+<div class="notice">
+  🎯 千问C端正在招聘「用户产品经理」，有用户 Sense + AI好奇心 → 简历发 @周丹(素槿)
+</div>
+
+<div class="page">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-meta">AI Product · 独立开发者</div>
+    <div class="hero-name">轻梦</div>
+    <div class="hero-name-sub">Ashly</div>
+
+    <div class="hero-body">
+      <div>
+        <p class="hero-desc">
+          专注于 <strong>AI 搜索提效 & Agent 业务落地</strong>。<br>
+          热衷把重复的工作自动化，把模糊的问题结构化。
+        </p>
+        <div class="tags">
+          <span class="tag">🌴 广东人</span>
+          <span class="tag">🧠 ISTJ</span>
+          <span class="tag">🏛️ 建筑转行</span>
+          <span class="tag">🤖 AI PD</span>
+          <span class="tag">💻 独立开发者</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Work -->
+  <div class="section" id="sec-work">
+    <div class="section-head">
+      <span class="section-title">工作经历</span>
+      <div class="section-rule"></div>
+    </div>
+    <div>
+      <div class="tl-item">
+        <div class="tl-year">26.2 — Now</div>
+        <div class="tl-info">
+          <span class="tl-badge now">在职</span>
+          <h3>千问C端事业群</h3>
+          <p>千问主Chat LLM策略 & 主动消息开场白</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">25.6 — 26.2</div>
+        <div class="tl-info">
+          <span class="tl-badge intl">阿里国际</span>
+          <h3>AI 搜索提效</h3>
+          <p>流量诊断 Agent 搭建</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">2023 — 2025</div>
+        <div class="tl-info">
+          <span class="tl-badge byte">番茄</span>
+          <h3>多模态 AIGC</h3>
+          <p>WorkFlow 形式的多模态 AIGC & LLM 搜索意图判别</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-year">Pre-2023</div>
+        <div class="tl-info">
+          <h3>实习经历</h3>
+          <p>字节工具 · 百度增长 · 快手AI策略</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Side Projects -->
+  <div class="section" id="sec-projects">
+    <div class="section-head">
+      <span class="section-title">Side Projects</span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="cards">
+      <a class="card" href="https://1d.alibaba-inc.com/apps/0363JYSo?createMode=mobile" target="_blank">
+        <div class="card-emoji">🏆</div>
+        <div class="card-title">心流阅读</div>
+        <div class="card-desc">Geek AI 大赛参赛作品</div>
+        <div class="card-link">体验一下 <span class="arr">→</span></div>
+      </a>
+      <div class="card">
+        <div class="card-emoji">🦷</div>
+        <div class="card-title">Braces-Girl 牙套日记</div>
+        <div class="card-desc">独立 App，记录矫正全程</div>
+        <div class="qr-wrap" onclick="openLb(this)">
+          <img class="qr-img"
+            src="https://alidocs2.oss-cn-zhangjiakou.aliyuncs.com/res/3M0OzeZ2y75JNqze/img/372a16b7-a908-4c16-b8fa-67d1aaf2af18.jpeg?Expires=1784285928&OSSAccessKeyId=LTAI5tKTjg4Kq1HCdBJ8qpSp&Signature=rKArYefkK%2BC8bhlegD5uGHQBJxU%3D"
+            alt="牙套日记二维码" />
+        </div>
+      </div>
+      <a class="card" href="https://lala-ai-companion.vercel.app/" target="_blank">
+        <div class="card-emoji">💌</div>
+        <div class="card-title">心动信箱</div>
+        <div class="card-desc">女性向 AI 互动游戏</div>
+        <div class="card-link">玩一玩 <span class="arr">→</span></div>
+      </a>
+      <div class="card">
+        <div class="card-emoji">✍️</div>
+        <div class="card-title">轻梦Agent手记</div>
+        <div class="card-desc">AI PD 的思考与实践</div>
+        <div class="qr-wrap" onclick="openLb(this)">
+          <img class="qr-img"
+            src="https://alidocs2.oss-cn-zhangjiakou.aliyuncs.com/res/3M0OzeZ2y75JNqze/img/0f7710b7-6f18-4f57-a79c-433509f015f1.png?Expires=1784285928&OSSAccessKeyId=LTAI5tKTjg4Kq1HCdBJ8qpSp&Signature=IcLnoEVCvsFzD1V3Hnow2Tzm0PY%3D"
+            alt="公众号二维码" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Articles -->
+  <div class="section" id="sec-articles">
+    <div class="section-head">
+      <span class="section-title">经验与分享</span>
+      <div class="section-rule"></div>
+    </div>
+    <div class="articles">
+      <a class="article" href="https://ata.atatech.org/articles/11020591648" target="_blank">
+        <div class="article-icon">⭐️</div>
+        <div class="article-info">
+          <h3>产品经理 x CLI</h3>
+          <p>思考 · ATA 文章 · 一个 PM 如何用 Claude Code 把重复工作全部自动化</p>
+        </div>
+        <div class="article-arrow">›</div>
+      </a>
+      <a class="article" href="https://ata.atatech.org/articles/11020531673" target="_blank">
+        <div class="article-icon">📄</div>
+        <div class="article-info">
+          <h3>拒绝黑盒，编排 Workflow 实操分享</h3>
+          <p>文档 · ATA 文章 · 从零搭建流量诊断 Agent 的完整思路与踩坑记录</p>
+        </div>
+        <div class="article-arrow">›</div>
+      </a>
+      <a class="article" href="https://n.dingtalk.com/dingding/live-room/index.html?roomId=al6q2vNZyP&liveUuid=de79acf8-38b6-4ae6-be05-b6a6b46d6f2c" target="_blank">
+        <div class="article-icon">🎬</div>
+        <div class="article-info">
+          <h3>阿里国际内部分享</h3>
+          <p>直播 · 回放链接 · AI 搜索提效实战：Agent 如何落地到真实业务场景</p>
+        </div>
+        <div class="article-arrow">›</div>
+      </a>
+      <div class="article wip">
+        <div class="article-icon">🔧</div>
+        <div class="article-info">
+          <h3>Agent Friendly 设计 <span class="wip-tag">Writing...</span></h3>
+          <p>思考 · 连载中 · 写给产品经理看：设计一个 Agent 能顺畅调用的系统</p>
+        </div>
+        <div class="article-arrow">›</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    轻梦 · 个人说明书 &nbsp;·&nbsp; Built with Claude Code ✦
+  </div>
+
+</div>
+
+<!-- TOC -->
+<nav class="toc">
+  <a class="toc-item" href="#sec-work">
+    <span class="toc-dot"></span>
+    <span class="toc-label">工作经历</span>
+  </a>
+  <a class="toc-item" href="#sec-projects">
+    <span class="toc-dot"></span>
+    <span class="toc-label">Side Projects</span>
+  </a>
+  <a class="toc-item" href="#sec-articles">
+    <span class="toc-dot"></span>
+    <span class="toc-label">经验与分享</span>
+  </a>
+</nav>
+
+<!-- Lightbox -->
+<div class="lb-overlay" id="lb" onclick="closeLb()">
+  <img id="lb-img" src="" alt="" />
+</div>
+
+<script>
+function openLb(wrap) {
+  var img = wrap.querySelector('img');
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lb-img').alt = img.alt;
+  document.getElementById('lb').classList.add('active');
+}
+function closeLb() {
+  document.getElementById('lb').classList.remove('active');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLb();
+});
+
+// Scrollspy
+(function() {
+  var sections = ['sec-work', 'sec-projects', 'sec-articles'];
+  var tocItems = document.querySelectorAll('.toc-item');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        tocItems.forEach(function(item) {
+          item.classList.toggle('active', item.getAttribute('href') === '#' + id);
+        });
+      }
+    });
+  }, { rootMargin: '-20% 0px -60% 0px', threshold: 0 });
+  sections.forEach(function(id) {
+    var el = document.getElementById(id);
+    if (el) observer.observe(el);
+  });
+})();
+</script>
+</body>
+</html>

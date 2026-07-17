@@ -288,39 +288,63 @@ body {
 .toc {
   position: fixed;
   top: 50%;
-  right: max(24px, calc((100vw - 720px) / 2 - 120px));
+  right: max(24px, calc((100vw - 720px) / 2 - 140px));
   transform: translateY(-50%);
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 4px;
   z-index: 100;
+  padding: 12px 0;
 }
-@media (max-width: 1000px) { .toc { display: none; } }
+@media (max-width: 1080px) { .toc { display: none; } }
 
 .toc-item {
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   text-decoration: none;
   color: var(--ink-3);
-  font-size: 11px;
+  font-size: 11.5px;
   font-weight: 500;
-  letter-spacing: 0.04em;
-  transition: color 0.15s;
+  letter-spacing: 0.03em;
+  transition: color 0.18s;
   white-space: nowrap;
   cursor: pointer;
+  padding: 5px 0;
+  position: relative;
 }
-.toc-item:hover, .toc-item.active { color: var(--ink); }
+.toc-item::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 2px;
+  height: 0;
+  background: var(--purple);
+  border-radius: 2px;
+  transition: height 0.2s;
+}
+.toc-item.active::before { height: 20px; }
+.toc-item:hover { color: var(--ink-2); }
+.toc-item.active { color: var(--ink); font-weight: 600; }
 .toc-dot {
-  width: 5px; height: 5px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: currentColor;
   flex-shrink: 0;
-  transition: transform 0.15s;
+  transition: transform 0.18s, background 0.18s;
 }
-.toc-item.active .toc-dot { transform: scale(1.6); }
-.toc-label { opacity: 0; transition: opacity 0.15s; }
-.toc-item:hover .toc-label, .toc-item.active .toc-label { opacity: 1; }
+.toc-item.active .toc-dot {
+  transform: scale(1.5);
+  background: var(--purple);
+}
+.toc-label {
+  opacity: 0.5;
+  transition: opacity 0.18s;
+}
+.toc-item:hover .toc-label { opacity: 0.8; }
+.toc-item.active .toc-label { opacity: 1; }
 </style>
 </head>
 <body>
@@ -340,8 +364,9 @@ body {
     <div class="hero-body">
       <div>
         <p class="hero-desc">
-          专注于 <strong>AI 搜索提效 & Agent 业务落地</strong>。<br>
-          热衷把重复的工作自动化，把模糊的问题结构化。
+          从建筑到 AI，一直在做同一件事——<br>
+          把复杂的技术 build 成人们真正会用的产品。<br>
+          如果顺便还能有点设计感，那就太好了。
         </p>
         <div class="tags">
           <span class="tag">🌴 广东人</span>

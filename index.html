@@ -345,9 +345,77 @@ body {
 }
 .toc-item:hover .toc-label { opacity: 0.8; }
 .toc-item.active .toc-label { opacity: 1; }
+
+/* ── PPG Canvas Background ── */
+#ppg-canvas {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.13;
+}
+body { position: relative; }
+.notice, .page, .toc-bar { position: relative; z-index: 1; }
+
+/* ── BGM Button ── */
+#bgm-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--purple);
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(124,90,240,0.35);
+  transition: transform 0.18s, box-shadow 0.18s;
+  font-size: 22px;
+  line-height: 1;
+}
+#bgm-btn:hover { transform: scale(1.12); box-shadow: 0 6px 22px rgba(124,90,240,0.5); }
+#bgm-btn.playing { animation: bgm-pulse 1.8s ease-in-out infinite; }
+@keyframes bgm-pulse {
+  0%,100% { box-shadow: 0 4px 16px rgba(124,90,240,0.35); }
+  50% { box-shadow: 0 4px 28px rgba(124,90,240,0.7), 0 0 0 8px rgba(124,90,240,0.08); }
+}
+#bgm-tooltip {
+  position: fixed;
+  bottom: 80px;
+  right: 18px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 12px;
+  padding: 5px 10px;
+  border-radius: 8px;
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.2s;
+  z-index: 101;
+}
+#bgm-btn:hover + #bgm-tooltip { opacity: 1; }
 </style>
 </head>
 <body>
+
+<!-- PPG Flying Girls Canvas Background -->
+<canvas id="ppg-canvas"></canvas>
+
+<!-- BGM: New Jeans - Supernatural -->
+<button id="bgm-btn" title="BGM">🎵</button>
+<div id="bgm-tooltip">New Jeans · Supernatural</div>
+<iframe id="yt-frame"
+  src="https://www.youtube.com/embed/ArmDp-zijuc?autoplay=1&loop=1&playlist=ArmDp-zijuc&mute=1"
+  allow="autoplay"
+  style="display:none" tabindex="-1" aria-hidden="true">
+</iframe>
 
 <div class="notice">
   🎯 千问C端正在招聘「用户产品经理」，有用户 Sense + AI好奇心 → 简历发 @周丹(素槿)
@@ -563,6 +631,175 @@ document.addEventListener('keydown', function(e) {
     var el = document.getElementById(id);
     if (el) observer.observe(el);
   });
+})();
+</script>
+
+<!-- ── PPG Flying Animation ── -->
+<script>
+(function() {
+  var canvas = document.getElementById('ppg-canvas');
+  var ctx = canvas.getContext('2d');
+
+  function resize() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  // Draw a Powerpuff Girl silhouette (simple cute chibi)
+  // color: fill color, x/y: center, r: size radius, angle: tilt
+  function drawPPG(color, x, y, r, angle) {
+    ctx.save();
+    ctx.translate(x, y);
+    ctx.rotate(angle);
+
+    // Body
+    ctx.beginPath();
+    ctx.ellipse(0, r * 0.6, r * 0.55, r * 0.7, 0, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    // Dress hem (triangle shape at bottom)
+    ctx.beginPath();
+    ctx.moveTo(-r * 0.55, r * 0.9);
+    ctx.lineTo(r * 0.55, r * 0.9);
+    ctx.lineTo(0, r * 1.6);
+    ctx.closePath();
+    ctx.fill();
+
+    // Waist stripe (white band)
+    ctx.beginPath();
+    ctx.fillStyle = 'rgba(255,255,255,0.7)';
+    ctx.ellipse(0, r * 0.95, r * 0.55, r * 0.13, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Head
+    ctx.beginPath();
+    ctx.arc(0, -r * 0.15, r * 0.72, 0, Math.PI * 2);
+    ctx.fillStyle = '#fce4c8';
+    ctx.fill();
+
+    // Hair (top rounded blob)
+    ctx.beginPath();
+    ctx.ellipse(0, -r * 0.75, r * 0.6, r * 0.45, 0, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    // Eyes (big cute circles)
+    var eyeY = -r * 0.18;
+    [-r * 0.22, r * 0.22].forEach(function(ex) {
+      ctx.beginPath();
+      ctx.arc(ex, eyeY, r * 0.16, 0, Math.PI * 2);
+      ctx.fillStyle = '#1a1a2e';
+      ctx.fill();
+      // eye shine
+      ctx.beginPath();
+      ctx.arc(ex + r * 0.05, eyeY - r * 0.05, r * 0.06, 0, Math.PI * 2);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+    });
+
+    // Arms (tiny stubs)
+    ctx.beginPath();
+    ctx.ellipse(-r * 0.75, r * 0.55, r * 0.22, r * 0.13, -0.4, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+    ctx.beginPath();
+    ctx.ellipse(r * 0.75, r * 0.55, r * 0.22, r * 0.13, 0.4, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.fill();
+
+    // Legs / flying speed lines (3 lines behind)
+    ctx.strokeStyle = color;
+    ctx.lineWidth = r * 0.09;
+    ctx.lineCap = 'round';
+    for (var i = 0; i < 3; i++) {
+      var ly = r * 1.55 + i * r * 0.28;
+      ctx.globalAlpha = 0.35 - i * 0.1;
+      ctx.beginPath();
+      ctx.moveTo(-r * 0.5, ly);
+      ctx.lineTo(-r * 1.6 - i * r * 0.4, ly);
+      ctx.stroke();
+    }
+    ctx.globalAlpha = 1;
+
+    ctx.restore();
+  }
+
+  // Three girls: Blossom(pink), Bubbles(blue), Buttercup(green)
+  var girls = [
+    { color: '#f07aaa', x: 0, y: 0, r: 28, speed: 0.9, amp: 60, phase: 0,    tilt: -0.18 },
+    { color: '#7ac4f0', x: 0, y: 0, r: 24, speed: 1.1, amp: 45, phase: 2.1,  tilt:  0.08 },
+    { color: '#6ad48a', x: 0, y: 0, r: 26, speed: 0.75,amp: 75, phase: 4.2,  tilt: -0.1  },
+  ];
+
+  // Stagger horizontal positions
+  var W, H;
+  function layoutGirls() {
+    W = canvas.width; H = canvas.height;
+    girls[0].x = W * 0.18; girls[0].baseY = H * 0.22;
+    girls[1].x = W * 0.55; girls[1].baseY = H * 0.15;
+    girls[2].x = W * 0.82; girls[2].baseY = H * 0.28;
+  }
+  layoutGirls();
+  window.addEventListener('resize', layoutGirls);
+
+  var t = 0;
+  function frame() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    t += 0.016;
+    girls.forEach(function(g) {
+      // Horizontal drift: slowly fly across screen, loop
+      g.x -= g.speed * 0.7;
+      if (g.x < -g.r * 3) g.x = canvas.width + g.r * 3;
+      // Vertical bob
+      var y = g.baseY + Math.sin(t * g.speed * 1.4 + g.phase) * g.amp;
+      drawPPG(g.color, g.x, y, g.r, g.tilt + Math.sin(t * 0.5 + g.phase) * 0.06);
+    });
+    requestAnimationFrame(frame);
+  }
+  frame();
+})();
+</script>
+
+<!-- ── BGM Control ── -->
+<script>
+(function() {
+  var btn = document.getElementById('bgm-btn');
+  var frame = document.getElementById('yt-frame');
+  var muted = true; // starts muted due to browser autoplay policy
+
+  // Try to unmute after first interaction
+  function tryUnmute() {
+    frame.src = 'https://www.youtube.com/embed/ArmDp-zijuc?autoplay=1&loop=1&playlist=ArmDp-zijuc&mute=0';
+    muted = false;
+    btn.textContent = '🎵';
+    btn.classList.add('playing');
+    document.removeEventListener('click', tryUnmute);
+  }
+
+  // Auto-try unmute on first any click anywhere
+  document.addEventListener('click', function(e) {
+    if (e.target !== btn) tryUnmute();
+  });
+
+  btn.addEventListener('click', function(e) {
+    e.stopPropagation();
+    if (muted) {
+      tryUnmute();
+    } else {
+      // Toggle mute/unmute via src param
+      muted = true;
+      frame.src = 'https://www.youtube.com/embed/ArmDp-zijuc?autoplay=1&loop=1&playlist=ArmDp-zijuc&mute=1';
+      btn.textContent = '🔇';
+      btn.classList.remove('playing');
+    }
+  });
+
+  // Start with muted autoplay immediately
+  frame.src = 'https://www.youtube.com/embed/ArmDp-zijuc?autoplay=1&loop=1&playlist=ArmDp-zijuc&mute=1';
+  btn.classList.add('playing');
 })();
 </script>
 </body>
